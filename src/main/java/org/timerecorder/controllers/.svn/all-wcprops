@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/ontario/!svn/ver/95/TimeRecorder/trunk/src/org/krivtsun/trec/controllers
+END
+GrossController.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/ontario/!svn/ver/95/TimeRecorder/trunk/src/org/krivtsun/trec/controllers/GrossController.java
+END
+StartStopAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/ontario/!svn/ver/95/TimeRecorder/trunk/src/org/krivtsun/trec/controllers/StartStopAction.java
+END
+TimeController.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/ontario/!svn/ver/94/TimeRecorder/trunk/src/org/krivtsun/trec/controllers/TimeController.java
+END
+NetController.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/ontario/!svn/ver/95/TimeRecorder/trunk/src/org/krivtsun/trec/controllers/NetController.java
+END
