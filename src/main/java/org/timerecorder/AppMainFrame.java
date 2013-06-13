@@ -51,7 +51,7 @@ import org.timerecorder.controllers.NetController;
  */
 public class AppMainFrame extends JFrame {
     private static final String APP_NAME = "Time Recorder";
-    private static final String APP_VER = "1.4";
+    private static final String APP_VER = "1.41";
 
     private static final File INI_FILE = new File("trec.ini");
 
@@ -139,7 +139,7 @@ public class AppMainFrame extends JFrame {
     }
 
     private void exitApplication() {
-        int result = JOptionPane.showConfirmDialog(null,
+        int result = JOptionPane.showConfirmDialog(Instance_,
                 "Do you wish to exit the " + APP_NAME + "?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
             storeProperties();
@@ -224,9 +224,9 @@ public class AppMainFrame extends JFrame {
 	private Action createAboutAction() {
 	    Action action = new AbstractAction("About...") {
 	        public void actionPerformed(ActionEvent e) {
-	            JOptionPane.showMessageDialog(null,
+	            JOptionPane.showMessageDialog(Instance_,
 	                    new JLabel("<html><center>" + APP_NAME + " " + APP_VER + 
-	                    		"<br>Copyright &copy; 2007-2009<br>by kontiky"),
+	                    		"<br>Copyright &copy; 2007-2013<br>by kontiky"),
 	                    "About", JOptionPane.INFORMATION_MESSAGE);
 	        }
 	    };
