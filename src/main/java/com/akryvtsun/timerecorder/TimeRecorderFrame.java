@@ -87,17 +87,7 @@ public final class TimeRecorderFrame extends JFrame {
         });
 
         if (SystemTray.isSupported()) {
-//            PopupMenu popup = new PopupMenu();
-//            MenuItem defaultItem = new MenuItem("Exit");
-//            defaultItem.addActionListener(new ActionListener() {
-//				@Override
-//				public void actionPerformed(ActionEvent e) {
-//					exitApplication();
-//				}
-//			});
-//            popup.add(defaultItem);
-
-            trayIcon = new TrayIcon(logo, APP_NAME, /*popup*/null);
+            trayIcon = new TrayIcon(logo, APP_NAME, null);
             trayIcon.setImageAutoSize(true);
 
             ActionListener actionListener = new ActionListener() {
