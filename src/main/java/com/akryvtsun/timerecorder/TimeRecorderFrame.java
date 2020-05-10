@@ -11,6 +11,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.akryvtsun.timerecorder.actions.AboutAction;
+import com.akryvtsun.timerecorder.actions.ExitAction;
+import com.akryvtsun.timerecorder.actions.NewDayAction;
 import com.akryvtsun.timerecorder.controllers.GrossController;
 import com.akryvtsun.timerecorder.controllers.NetController;
 import com.akryvtsun.timerecorder.properties.Storage;
@@ -117,42 +119,6 @@ public final class TimeRecorderFrame extends JFrame {
         grossController.updateRatio();
     }
 
-    private void exitApplication(final Component frame) {
-        int result = JOptionPane.showConfirmDialog(frame,
-            "Do you want to exit " + APP_NAME + "?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
-        if (result == JOptionPane.YES_OPTION) {
-            storage.storeProperties();
-            if (SystemTray.isSupported()) {
-                SystemTray.getSystemTray().remove(trayIcon);
-            }
-            dispose();
-            System.exit(0);
-        }
-    }
-
-    private Action createNewDayAction() {
-        Action action = new AbstractAction("New Workday", Functions.getIcon("new")) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                netController.startNewDay();
-                grossController.startNewDay();
-            }
-        };
-        action.putValue(Action.MNEMONIC_KEY, Integer.valueOf('N'));
-        return action;
-    }
-
-    private Action createExitAction() {
-        Action action = new AbstractAction("Exit") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                exitApplication(TimeRecorderFrame.this);
-            }
-        };
-        action.putValue(Action.MNEMONIC_KEY, Integer.valueOf('X'));
-        return action;
-    }
-
     private JMenuBar createMenuBar() {
         JMenuBar menu = new JMenuBar();
         menu.add(createFileMenu());
@@ -163,9 +129,9 @@ public final class TimeRecorderFrame extends JFrame {
     private JMenu createFileMenu() {
         JMenu menu = new JMenu("File");
         menu.setMnemonic('f');
-        menu.add(new JMenuItem(createNewDayAction()));
+        menu.add(new JMenuItem(new NewDayAction(netController, grossController)));
         menu.addSeparator();
-        menu.add(new JMenuItem(createExitAction()));
+        menu.add(new JMenuItem(new ExitAction(this, storage, trayIcon)));
         return menu;
     }
 

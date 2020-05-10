@@ -11,7 +11,7 @@ import javax.swing.JTextField;
  *
  * @author kontiky
  */
-abstract class TimeController {
+public abstract class TimeController {
     protected static final String ENTITY_PREFIX = "controller";
 
     private StartStopAction timeAction;
