@@ -21,7 +21,7 @@ import com.akryvtsun.timerecorder.Storable;
 public class GrossController extends TimeController implements Storable {
 	private static final String TIME_FORMAT = "%tT";
 	
-	private static final String PROPERTY_PREFIX = ENTITY_PREFFIX + ".gross";
+	private static final String PROPERTY_PREFIX = ENTITY_PREFIX + ".gross";
     private static final String START_TIME_PROPERTY = PROPERTY_PREFIX + ".startTime";
     private static final String IS_ENABLED_PROPERTY = PROPERTY_PREFIX + ".isEnabled";
     private static final String IS_STARTED_PROPERTY = PROPERTY_PREFIX + ".isStarted";

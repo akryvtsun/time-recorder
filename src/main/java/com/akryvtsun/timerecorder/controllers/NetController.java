@@ -22,7 +22,7 @@ import com.akryvtsun.timerecorder.Storable;
 public class NetController extends TimeController implements Storable {
 	private static final String RATIO_FORMAT = "%.3f";
 	
-	private static final String PROPERTY_PREFIX = ENTITY_PREFFIX + ".net";
+	private static final String PROPERTY_PREFIX = ENTITY_PREFIX + ".net";
     private static final String NET_TIME_PROPERTY = PROPERTY_PREFIX + ".netTime";
     private static final String IS_ENABLED_PROPERTY = PROPERTY_PREFIX + ".isEnabled";
     private static final String IS_STARTED_PROPERTY = PROPERTY_PREFIX + ".isStarted";

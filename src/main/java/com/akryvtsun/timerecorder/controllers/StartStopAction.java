@@ -23,7 +23,7 @@ public abstract class StartStopAction extends AbstractAction implements Storable
 	static final int TIMER_TICK = 1000;
     private static final Timer Clock = new Timer(TIMER_TICK, null);	
     
-    private static final String ENTITY_PREFFIX = "time.";
+    private static final String ENTITY_PREFIX = "time.";
     private static final String PERIOD_PROPERTY = ".periodMillis";
     private static final String LAST_START_PROPERTY = ".lastStartMillis";    
 
@@ -73,16 +73,16 @@ public abstract class StartStopAction extends AbstractAction implements Storable
     
 	@Override
     public void store(Properties props) {
-        props.setProperty(ENTITY_PREFFIX + getName() + PERIOD_PROPERTY, String.valueOf(periodMillis));
+        props.setProperty(ENTITY_PREFIX + getName() + PERIOD_PROPERTY, String.valueOf(periodMillis));
         if (isStarted())
-        	props.setProperty(ENTITY_PREFFIX + getName() + LAST_START_PROPERTY, String.valueOf(lastStartMillis));
+        	props.setProperty(ENTITY_PREFIX + getName() + LAST_START_PROPERTY, String.valueOf(lastStartMillis));
     }    
     
 	@Override
     public void restore(Properties props) {
-		periodMillis = Long.parseLong(props.getProperty(ENTITY_PREFFIX + getName() + PERIOD_PROPERTY, "0"));
+		periodMillis = Long.parseLong(props.getProperty(ENTITY_PREFIX + getName() + PERIOD_PROPERTY, "0"));
 		if (isStarted())
-			lastStartMillis = Long.parseLong(props.getProperty(ENTITY_PREFFIX + getName() + LAST_START_PROPERTY, "0"));
+			lastStartMillis = Long.parseLong(props.getProperty(ENTITY_PREFIX + getName() + LAST_START_PROPERTY, "0"));
 		else
 			lastStartMillis = System.currentTimeMillis();
 		updatePeriodImpl();

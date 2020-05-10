@@ -49,7 +49,7 @@ import com.akryvtsun.timerecorder.controllers.NetController;
  *
  * @author kontiky
  */
-public class AppMainFrame extends JFrame {
+public final class AppMainFrame extends JFrame {
     private static final String APP_NAME = "Time Recorder";
     private static final String APP_VER = "1.41";
 
