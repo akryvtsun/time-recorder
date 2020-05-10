@@ -5,11 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Properties;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -27,10 +22,10 @@ public final class TimeRecorderFrame extends JFrame {
     private static final String APP_NAME = "Time Recorder";
     private static final String APP_VER = "1.41";
 
-    private final File iniFile = new File("trec.ini");
-
     private final GrossController grossController;
     private final NetController netController;
+
+    private final Storage storage;
     
     private TrayIcon trayIcon;
 
@@ -72,6 +67,8 @@ public final class TimeRecorderFrame extends JFrame {
         netController.getTimeAction().setChangeListener(l);
         grossController = new GrossController(netController);
         grossController.getTimeAction().setChangeListener(l);
+
+        storage = new Storage(netController, grossController);
         
         netController.setRatioListener(new ChangeListener() {
 			@Override
@@ -111,14 +108,15 @@ public final class TimeRecorderFrame extends JFrame {
         add(createContent());
         pack();
 
-        restoreProperties();
+        storage.restoreProperties();
+		grossController.updateRatio();
     }
 
     private void exitApplication(final Component frame) {
         int result = JOptionPane.showConfirmDialog(frame,
                 "Do you wish to exit the " + APP_NAME + "?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
-            storeProperties();
+            storage.storeProperties();
             if (SystemTray.isSupported()) {
             	SystemTray.getSystemTray().remove(trayIcon);
             }
@@ -126,55 +124,6 @@ public final class TimeRecorderFrame extends JFrame {
             System.exit(0);
         }
     }
-
-    private void storeProperties() {
-//	    if (grossController.getTimeAction().isStarted()) {
-	        // stores data only if gross timer was started
-	        Properties props = new Properties();
-	        grossController.store(props);
-	        netController.store(props);
-	        FileOutputStream fos = null;
-	        try {
-	            fos = new FileOutputStream(iniFile);
-	            props.store(fos, null);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        } finally {
-	            if (fos != null)
-	                try {
-	                    fos.close();
-	                } catch (IOException e) {}
-	        }
-//	    } else if (INI_FILE.exists()) {
-//	        // delete data file if user exits application normally
-//	        // while gross timer was stopped  
-//	        INI_FILE.delete();
-//	    }
-	}
-
-	void restoreProperties() {
-	    if (iniFile.exists()) {
-	        // restore settings if ini file presents in file system
-	        Properties props = new Properties();
-	        FileInputStream fis = null;
-	        try {
-	            fis = new FileInputStream(iniFile);
-	            props.load(fis);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        } finally {
-	            if (fis != null)
-	                try {
-	                    fis.close();
-	                } catch (IOException e) {}
-	        }
-	        grossController.restore(props);
-	        netController.restore(props);
-	        grossController.updateRatio();
-	        // delete ini file after data loading
-	        iniFile.delete();
-	    }
-	}
 
 	private Action createNewDayAction() {
 	    Action action = new AbstractAction("New Workday", Functions.getIcon("new")) {
