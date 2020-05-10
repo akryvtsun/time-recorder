@@ -9,5 +9,6 @@ import java.util.Properties;
  */
 public interface Storable {
     void store(Properties props);
+
     void restore(Properties props);
 }
