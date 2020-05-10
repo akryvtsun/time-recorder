@@ -7,4 +7,5 @@ target/
 *.iml
 *.ipr
 *.log
+*.ini
 
