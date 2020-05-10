@@ -1,4 +1,4 @@
-# TimeRecorder
+# Time Recorder
 [![Hits-of-Code](https://hitsofcode.com/github/akryvtsun/time-recorder)](https://hitsofcode.com/view/github/akryvtsun/time-recorder)
 
 [+] Feature added.\
