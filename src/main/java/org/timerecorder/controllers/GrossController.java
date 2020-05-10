@@ -11,14 +11,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.timerecorder.IStorable;
+import org.timerecorder.Storable;
 
 /**
  * Gross time calculation controller.
  *
  * @author kontiky
  */
-public class GrossController extends TimeController implements IStorable {
+public class GrossController extends TimeController implements Storable {
 	private static final String TIME_FORMAT = "%tT";
 	
 	private static final String PROPERTY_PREFIX = ENTITY_PREFFIX + ".gross";

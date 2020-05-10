@@ -11,7 +11,7 @@ import javax.swing.Timer;
 import javax.swing.event.ChangeListener;
 
 import org.timerecorder.Functions;
-import org.timerecorder.IStorable;
+import org.timerecorder.Storable;
 
 /**
  * Start/stop action for time controllers.
@@ -19,7 +19,7 @@ import org.timerecorder.IStorable;
  *
  * @author kontiky
  */
-public abstract class StartStopAction extends AbstractAction implements IStorable {
+public abstract class StartStopAction extends AbstractAction implements Storable {
 	static final int TIMER_TICK = 1000;
     private static final Timer Clock = new Timer(TIMER_TICK, null);	
     

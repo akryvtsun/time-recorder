@@ -12,14 +12,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeListener;
 
-import org.timerecorder.IStorable;
+import org.timerecorder.Storable;
 
 /**
  * Net time calculation controller.
  *
  * @author kontiky
  */
-public class NetController extends TimeController implements IStorable {
+public class NetController extends TimeController implements Storable {
 	private static final String RATIO_FORMAT = "%.3f";
 	
 	private static final String PROPERTY_PREFIX = ENTITY_PREFFIX + ".net";
