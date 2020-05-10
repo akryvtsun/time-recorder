@@ -90,7 +90,7 @@ public final class AppMainFrame extends JFrame {
 					state = netController.getTimeAction().isStarted()?
 							RecorderState.NET: RecorderState.GROSS;
 				}
-				setState(state); 
+				setState(AppMainFrame.this, state);
 			}
 		};
 
@@ -138,8 +138,8 @@ public final class AppMainFrame extends JFrame {
         pack();
     }
 
-    private void exitApplication() {
-        int result = JOptionPane.showConfirmDialog(Instance_,
+    private void exitApplication(final Component frame) {
+        int result = JOptionPane.showConfirmDialog(frame,
                 "Do you wish to exit the " + APP_NAME + "?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
             storeProperties();
@@ -176,7 +176,7 @@ public final class AppMainFrame extends JFrame {
 //	    }
 	}
 
-	private void restoreProperties() {
+	void restoreProperties() {
 	    if (INI_FILE.exists()) {
 	        // restore settings if ini file presents in file system
 	        Properties props = new Properties();
@@ -214,17 +214,17 @@ public final class AppMainFrame extends JFrame {
 	private Action createExitAction() {
 	    Action action = new AbstractAction("Exit") {
 	        public void actionPerformed(ActionEvent e) {
-	            exitApplication();
+	            exitApplication(AppMainFrame.this);
 	        }
 	    };
 	    action.putValue(Action.MNEMONIC_KEY, new Integer('X'));
 	    return action;
 	}
 
-	private Action createAboutAction() {
+	private Action createAboutAction(final Component frame) {
 	    Action action = new AbstractAction("About...") {
 	        public void actionPerformed(ActionEvent e) {
-	            JOptionPane.showMessageDialog(Instance_,
+	            JOptionPane.showMessageDialog(frame,
 	                    new JLabel("<html><center>" + APP_NAME + " " + APP_VER + 
 	                    		"<br>Copyright &copy; 2007-2013<br>by kontiky"),
 	                    "About", JOptionPane.INFORMATION_MESSAGE);
@@ -253,7 +253,7 @@ public final class AppMainFrame extends JFrame {
     private JMenu createHelpMenu() {
         JMenu menu = new JMenu("Help");
         menu.setMnemonic('h');
-        menu.add(new JMenuItem(createAboutAction()));
+        menu.add(new JMenuItem(createAboutAction(this)));
         return menu;
     }
     
@@ -265,20 +265,11 @@ public final class AppMainFrame extends JFrame {
         return panel;
     }
     
-    private static AppMainFrame Instance_;
-    
-    private void setState(RecorderState state) {
+    private void setState(AppMainFrame frame, RecorderState state) {
     	Image logo = Functions.getLogo(state);
 		if (SystemTray.isSupported()) {
-			Instance_.trayIcon_.setImage(logo);
-		}    	
-		Instance_.setIconImage(logo);
-    }
-
-    public static void main(String... args) {
-    	Instance_ = new AppMainFrame();
-    	Instance_.restoreProperties();
-    	Instance_.setLocationRelativeTo(null);
-    	Instance_.setVisible(true);
+			frame.trayIcon_.setImage(logo);
+		}
+		frame.setIconImage(logo);
     }
 }
