@@ -49,7 +49,7 @@ import com.akryvtsun.timerecorder.controllers.NetController;
  *
  * @author kontiky
  */
-public final class AppMainFrame extends JFrame {
+public final class TimeRecorderFrame extends JFrame {
     private static final String APP_NAME = "Time Recorder";
     private static final String APP_VER = "1.41";
 
@@ -60,7 +60,7 @@ public final class AppMainFrame extends JFrame {
     
     private TrayIcon trayIcon;
 
-    AppMainFrame() {
+    TimeRecorderFrame() {
         super(APP_NAME);
         
         Image logo = Functions.getLogo(RecorderState.INIT);
@@ -90,7 +90,7 @@ public final class AppMainFrame extends JFrame {
 					state = netController.getTimeAction().isStarted()?
 							RecorderState.NET: RecorderState.GROSS;
 				}
-				setState(AppMainFrame.this, state);
+				setState(TimeRecorderFrame.this, state);
 			}
 		};
 
@@ -136,6 +136,8 @@ public final class AppMainFrame extends JFrame {
 		setJMenuBar(createMenuBar());
         add(createContent());
         pack();
+
+        restoreProperties();
     }
 
     private void exitApplication(final Component frame) {
@@ -207,17 +209,17 @@ public final class AppMainFrame extends JFrame {
 	        	grossController.startNewDay();
 	        }
 	    };
-	    action.putValue(Action.MNEMONIC_KEY, new Integer('N'));
+	    action.putValue(Action.MNEMONIC_KEY, Integer.valueOf('N'));
 	    return action;
 	}
 
 	private Action createExitAction() {
 	    Action action = new AbstractAction("Exit") {
 	        public void actionPerformed(ActionEvent e) {
-	            exitApplication(AppMainFrame.this);
+	            exitApplication(TimeRecorderFrame.this);
 	        }
 	    };
-	    action.putValue(Action.MNEMONIC_KEY, new Integer('X'));
+	    action.putValue(Action.MNEMONIC_KEY, Integer.valueOf('X'));
 	    return action;
 	}
 
@@ -230,7 +232,7 @@ public final class AppMainFrame extends JFrame {
 	                    "About", JOptionPane.INFORMATION_MESSAGE);
 	        }
 	    };
-	    action.putValue(Action.MNEMONIC_KEY, new Integer('A'));
+	    action.putValue(Action.MNEMONIC_KEY, Integer.valueOf('A'));
 	    return action;
 	}
 
@@ -265,7 +267,7 @@ public final class AppMainFrame extends JFrame {
         return panel;
     }
     
-    private void setState(AppMainFrame frame, RecorderState state) {
+    private void setState(TimeRecorderFrame frame, RecorderState state) {
     	Image logo = Functions.getLogo(state);
 		if (SystemTray.isSupported()) {
 			frame.trayIcon.setImage(logo);

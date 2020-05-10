@@ -19,7 +19,7 @@ public final class Functions {
      * @return loaded image
      */
     public static ImageIcon getIcon(String iconName) {
-        return new ImageIcon(AppMainFrame.class.getResource("icons/" + iconName + ".png"));
+        return new ImageIcon(TimeRecorderFrame.class.getResource("icons/" + iconName + ".png"));
     }
 
     public static Image getLogo(RecorderState state) {
