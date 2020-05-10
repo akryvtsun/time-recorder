@@ -1,4 +1,4 @@
-package org.timerecorder;
+package com.akryvtsun.timerecorder;
 
 import java.util.Properties;
 
