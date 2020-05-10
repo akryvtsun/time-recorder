@@ -68,7 +68,7 @@ public class GrossController extends TimeController implements Storable {
         setStartTime(System.currentTimeMillis());
 
         getTimeAction().startNewDay();
-        grossTimeField.setText(getStringTime(0));
+        grossTimeField.setText(new TimeString(0).get());
 
         if (!getTimeAction().isStarted()) {
             getTimeButton().setEnabled(true);
@@ -104,7 +104,7 @@ public class GrossController extends TimeController implements Storable {
     }
 
     private void updateCounters(long periodMillis) {
-        grossTimeField.setText(getStringTime(periodMillis));
+        grossTimeField.setText(new TimeString(periodMillis).get());
         netController.updateRatio(periodMillis);
     }
 

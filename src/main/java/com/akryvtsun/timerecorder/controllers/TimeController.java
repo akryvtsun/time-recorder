@@ -12,8 +12,6 @@ import javax.swing.JTextField;
  * @author kontiky
  */
 abstract class TimeController {
-    private final static String DATE_FORMAT = "%2d:%02d:%02d";
-
     protected static final String ENTITY_PREFIX = "controller";
 
     private StartStopAction timeAction;
@@ -50,13 +48,4 @@ abstract class TimeController {
     protected abstract Component createViewComponent();
 
     public abstract void startNewDay();
-
-    protected static String getStringTime(long millis) {
-        long hours = TimeUnit.MILLISECONDS.toHours(millis);
-        millis -= TimeUnit.HOURS.toMillis(hours);
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(millis);
-        millis -= TimeUnit.MINUTES.toMillis(minutes);
-        long secs = TimeUnit.MILLISECONDS.toSeconds(millis);
-        return String.format(DATE_FORMAT, hours, minutes, secs);
-    }
 }
