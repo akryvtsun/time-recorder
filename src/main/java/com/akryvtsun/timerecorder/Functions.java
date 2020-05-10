@@ -9,19 +9,20 @@ import javax.swing.ImageIcon;
  *
  * @author kontiky
  */
-public class Functions {
+public final class Functions {
+
     /**
      * Loads image from file in defined location into memory.
      * Loads only <i>png</i> image files.
-     * 
-     * @param iconName  image file name.
+     *
+     * @param iconName image file name.
      * @return loaded image
      */
     public static ImageIcon getIcon(String iconName) {
-        return new ImageIcon(AppMainFrame.class.getResource("icons/" +iconName+".png"));
+        return new ImageIcon(AppMainFrame.class.getResource("icons/" + iconName + ".png"));
     }
-    
+
     public static Image getLogo(RecorderState state) {
-        return getIcon("logo/"+state.toString().toLowerCase()).getImage();
-    }    
+        return getIcon("logo/" + state.toString().toLowerCase()).getImage();
+    }
 }
