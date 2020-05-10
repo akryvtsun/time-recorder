@@ -2,6 +2,8 @@
 ![CI](https://github.com/akryvtsun/time-recorder/workflows/CI/badge.svg)
 [![Hits-of-Code](https://hitsofcode.com/github/akryvtsun/time-recorder)](https://hitsofcode.com/view/github/akryvtsun/time-recorder)
 
+![logo](misc/time-recorder.png)
+
 [+] Feature added.\
 [-] Feature removed.\
 [*] Improved.\
