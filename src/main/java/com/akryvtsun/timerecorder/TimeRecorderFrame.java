@@ -12,6 +12,7 @@ import javax.swing.event.ChangeListener;
 
 import com.akryvtsun.timerecorder.controllers.GrossController;
 import com.akryvtsun.timerecorder.controllers.NetController;
+import com.akryvtsun.timerecorder.properties.Storage;
 
 /**
  * Time Recorder main frame.

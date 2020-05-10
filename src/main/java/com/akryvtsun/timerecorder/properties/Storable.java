@@ -1,4 +1,4 @@
-package com.akryvtsun.timerecorder;
+package com.akryvtsun.timerecorder.properties;
 
 import java.util.Properties;
 
@@ -8,6 +8,6 @@ import java.util.Properties;
  * @author kontiky
  */
 public interface Storable {
-    public void store(Properties props);
-    public void restore(Properties props);    
+    void store(Properties props);
+    void restore(Properties props);
 }

@@ -11,7 +11,7 @@ import javax.swing.Timer;
 import javax.swing.event.ChangeListener;
 
 import com.akryvtsun.timerecorder.Functions;
-import com.akryvtsun.timerecorder.Storable;
+import com.akryvtsun.timerecorder.properties.Storable;
 
 /**
  * Start/stop action for time controllers.

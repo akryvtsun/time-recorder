@@ -1,4 +1,4 @@
-package com.akryvtsun.timerecorder;
+package com.akryvtsun.timerecorder.properties;
 
 import java.io.*;
 import java.util.Properties;
@@ -16,7 +16,7 @@ public final class Storage {
         this.components = components;
     }
 
-    void restoreProperties() {
+    public void restoreProperties() {
         if (iniFile.exists()) {
             Properties props = new Properties();
             try {
@@ -32,7 +32,7 @@ public final class Storage {
         }
     }
 
-    void storeProperties() {
+    public void storeProperties() {
         Properties props = new Properties();
         for (Storable s : components)
             s.store(props);

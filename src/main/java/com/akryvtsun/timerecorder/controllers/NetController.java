@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeListener;
 
-import com.akryvtsun.timerecorder.Storable;
+import com.akryvtsun.timerecorder.properties.Storable;
 
 /**
  * Net time calculation controller.
