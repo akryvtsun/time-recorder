@@ -27,42 +27,43 @@ public final class TimeRecorderFrame extends JFrame {
     private final NetController netController;
 
     private final Storage storage;
-    
+
     private TrayIcon trayIcon;
 
     TimeRecorderFrame() {
         super(APP_NAME);
-        
+
         Image logo = Functions.getLogo(RecorderState.INIT);
-        
+
         setIconImage(logo);
         setResizable(false);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        
+
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-        		if (SystemTray.isSupported()) {
-	        	    try {
-	        	    	SystemTray.getSystemTray().add(trayIcon);
-	        	    	setVisible(false);
-	        	    } catch (AWTException ex) {
-	        	        System.err.println("TrayIcon could not be added.");
-	        	    }        			
-        		}
+                if (SystemTray.isSupported()) {
+                    try {
+                        SystemTray.getSystemTray().add(trayIcon);
+                        setVisible(false);
+                    } catch (AWTException ex) {
+                        System.err.println("TrayIcon could not be added.");
+                    }
+                }
             }
         });
-        
+
         final ChangeListener l = new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				RecorderState state = RecorderState.INIT;
-				if (grossController.getTimeAction().isStarted()) {
-					state = netController.getTimeAction().isStarted()?
-							RecorderState.NET: RecorderState.GROSS;
-				}
-				setState(TimeRecorderFrame.this, state);
-			}
-		};
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                RecorderState state = RecorderState.INIT;
+                if (grossController.getTimeAction().isStarted()) {
+                    state = netController.getTimeAction().isStarted()
+                        ? RecorderState.NET
+                        : RecorderState.GROSS;
+                }
+                setState(TimeRecorderFrame.this, state);
+            }
+        };
 
         netController = new NetController();
         netController.getTimeAction().setChangeListener(l);
@@ -70,17 +71,17 @@ public final class TimeRecorderFrame extends JFrame {
         grossController.getTimeAction().setChangeListener(l);
 
         storage = new Storage(netController, grossController);
-        
+
         netController.setRatioListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				String title = APP_NAME + " - " + netController.getRatio();
-				setTitle(title);
-				if (SystemTray.isSupported()) 
-					trayIcon.setToolTip(title);
-			}
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                String title = APP_NAME + " - " + netController.getRatio();
+                setTitle(title);
+                if (SystemTray.isSupported())
+                    trayIcon.setToolTip(title);
+            }
         });
-        
+
         if (SystemTray.isSupported()) {
 //            PopupMenu popup = new PopupMenu();
 //            MenuItem defaultItem = new MenuItem("Exit");
@@ -91,82 +92,82 @@ public final class TimeRecorderFrame extends JFrame {
 //				}
 //			});
 //            popup.add(defaultItem);
-            
-        	trayIcon = new TrayIcon(logo, APP_NAME, /*popup*/null);
-        	trayIcon.setImageAutoSize(true);
-        	
-	    	ActionListener actionListener = new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					setVisible(true);
-					setExtendedState(Frame.NORMAL);
-					SystemTray.getSystemTray().remove(trayIcon);
-				}
-			};       
-			trayIcon.addActionListener(actionListener);
-        }        
-        
-		setJMenuBar(createMenuBar());
+
+            trayIcon = new TrayIcon(logo, APP_NAME, /*popup*/null);
+            trayIcon.setImageAutoSize(true);
+
+            ActionListener actionListener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setVisible(true);
+                    setExtendedState(Frame.NORMAL);
+                    SystemTray.getSystemTray().remove(trayIcon);
+                }
+            };
+            trayIcon.addActionListener(actionListener);
+        }
+
+        setJMenuBar(createMenuBar());
         add(createContent());
         pack();
 
         storage.restoreProperties();
-		grossController.updateRatio();
+        grossController.updateRatio();
     }
 
     private void exitApplication(final Component frame) {
         int result = JOptionPane.showConfirmDialog(frame,
-                "Do you wish to exit the " + APP_NAME + "?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
+            "Do you wish to exit the " + APP_NAME + "?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
             storage.storeProperties();
             if (SystemTray.isSupported()) {
-            	SystemTray.getSystemTray().remove(trayIcon);
+                SystemTray.getSystemTray().remove(trayIcon);
             }
             dispose();
             System.exit(0);
         }
     }
 
-	private Action createNewDayAction() {
-	    Action action = new AbstractAction("New Workday", Functions.getIcon("new")) {
-	        public void actionPerformed(ActionEvent e) {
-	        	netController.startNewDay();
-	        	grossController.startNewDay();
-	        }
-	    };
-	    action.putValue(Action.MNEMONIC_KEY, Integer.valueOf('N'));
-	    return action;
-	}
+    private Action createNewDayAction() {
+        Action action = new AbstractAction("New Workday", Functions.getIcon("new")) {
+            public void actionPerformed(ActionEvent e) {
+                netController.startNewDay();
+                grossController.startNewDay();
+            }
+        };
+        action.putValue(Action.MNEMONIC_KEY, Integer.valueOf('N'));
+        return action;
+    }
 
-	private Action createExitAction() {
-	    Action action = new AbstractAction("Exit") {
-	        public void actionPerformed(ActionEvent e) {
-	            exitApplication(TimeRecorderFrame.this);
-	        }
-	    };
-	    action.putValue(Action.MNEMONIC_KEY, Integer.valueOf('X'));
-	    return action;
-	}
+    private Action createExitAction() {
+        Action action = new AbstractAction("Exit") {
+            public void actionPerformed(ActionEvent e) {
+                exitApplication(TimeRecorderFrame.this);
+            }
+        };
+        action.putValue(Action.MNEMONIC_KEY, Integer.valueOf('X'));
+        return action;
+    }
 
-	private Action createAboutAction(final Component frame) {
-	    Action action = new AbstractAction("About...") {
-	        public void actionPerformed(ActionEvent e) {
-	            JOptionPane.showMessageDialog(frame,
-	                    new JLabel("<html><center>" + APP_NAME + " " + APP_VER + 
-	                    		"<br>Copyright &copy; 2007-2013<br>by kontiky"),
-	                    "About", JOptionPane.INFORMATION_MESSAGE);
-	        }
-	    };
-	    action.putValue(Action.MNEMONIC_KEY, Integer.valueOf('A'));
-	    return action;
-	}
+    private Action createAboutAction(final Component frame) {
+        Action action = new AbstractAction("About...") {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(frame,
+                    new JLabel("<html><center>" + APP_NAME + " " + APP_VER +
+                        "<br>Copyright &copy; 2007-2020<br>by kontiky"),
+                    "About", JOptionPane.INFORMATION_MESSAGE);
+            }
+        };
+        action.putValue(Action.MNEMONIC_KEY, Integer.valueOf('A'));
+        return action;
+    }
 
-	private JMenuBar createMenuBar() {
-    	JMenuBar menu = new JMenuBar();
-    	menu.add(createFileMenu());
-    	menu.add(createHelpMenu());
+    private JMenuBar createMenuBar() {
+        JMenuBar menu = new JMenuBar();
+        menu.add(createFileMenu());
+        menu.add(createHelpMenu());
         return menu;
     }
-    
+
     private JMenu createFileMenu() {
         JMenu menu = new JMenu("File");
         menu.setMnemonic('f');
@@ -175,14 +176,14 @@ public final class TimeRecorderFrame extends JFrame {
         menu.add(new JMenuItem(createExitAction()));
         return menu;
     }
-    
+
     private JMenu createHelpMenu() {
         JMenu menu = new JMenu("Help");
         menu.setMnemonic('h');
         menu.add(new JMenuItem(createAboutAction(this)));
         return menu;
     }
-    
+
     private JPanel createContent() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         panel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
@@ -190,12 +191,12 @@ public final class TimeRecorderFrame extends JFrame {
         panel.add(netController.getViewComponent());
         return panel;
     }
-    
+
     private void setState(TimeRecorderFrame frame, RecorderState state) {
-    	Image logo = Functions.getLogo(state);
-		if (SystemTray.isSupported()) {
-			frame.trayIcon.setImage(logo);
-		}
-		frame.setIconImage(logo);
+        Image logo = Functions.getLogo(state);
+        if (SystemTray.isSupported()) {
+            frame.trayIcon.setImage(logo);
+        }
+        frame.setIconImage(logo);
     }
 }
