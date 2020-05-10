@@ -1,6 +1,6 @@
 package com.akryvtsun.timerecorder;
 
-public class Launcher {
+public final class Launcher {
 
     public static void main(String... args) {
         AppMainFrame frame = new AppMainFrame();

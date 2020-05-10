@@ -53,12 +53,12 @@ public final class AppMainFrame extends JFrame {
     private static final String APP_NAME = "Time Recorder";
     private static final String APP_VER = "1.41";
 
-    private static final File INI_FILE = new File("trec.ini");
+    private final File iniFile = new File("trec.ini");
 
     private final GrossController grossController;
     private final NetController netController;
     
-    private TrayIcon trayIcon_;
+    private TrayIcon trayIcon;
 
     AppMainFrame() {
         super(APP_NAME);
@@ -73,7 +73,7 @@ public final class AppMainFrame extends JFrame {
             public void windowClosing(WindowEvent e) {
         		if (SystemTray.isSupported()) {
 	        	    try {
-	        	    	SystemTray.getSystemTray().add(trayIcon_);
+	        	    	SystemTray.getSystemTray().add(trayIcon);
 	        	    	setVisible(false);
 	        	    } catch (AWTException ex) {
 	        	        System.err.println("TrayIcon could not be added.");
@@ -105,7 +105,7 @@ public final class AppMainFrame extends JFrame {
 				String title = APP_NAME + " - " + netController.getRatio();
 				setTitle(title);
 				if (SystemTray.isSupported()) 
-					trayIcon_.setToolTip(title);
+					trayIcon.setToolTip(title);
 			}
         });
         
@@ -120,17 +120,17 @@ public final class AppMainFrame extends JFrame {
 //			});
 //            popup.add(defaultItem);
             
-        	trayIcon_ = new TrayIcon(logo, APP_NAME, /*popup*/null);
-        	trayIcon_.setImageAutoSize(true);
+        	trayIcon = new TrayIcon(logo, APP_NAME, /*popup*/null);
+        	trayIcon.setImageAutoSize(true);
         	
 	    	ActionListener actionListener = new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					setVisible(true);
 					setExtendedState(Frame.NORMAL);
-					SystemTray.getSystemTray().remove(trayIcon_); 					
+					SystemTray.getSystemTray().remove(trayIcon);
 				}
 			};       
-			trayIcon_.addActionListener(actionListener);
+			trayIcon.addActionListener(actionListener);
         }        
         
 		setJMenuBar(createMenuBar());
@@ -144,7 +144,7 @@ public final class AppMainFrame extends JFrame {
         if (result == JOptionPane.YES_OPTION) {
             storeProperties();
             if (SystemTray.isSupported()) {
-            	SystemTray.getSystemTray().remove(trayIcon_);
+            	SystemTray.getSystemTray().remove(trayIcon);
             }
             dispose();
             System.exit(0);
@@ -159,7 +159,7 @@ public final class AppMainFrame extends JFrame {
 	        netController.store(props);
 	        FileOutputStream fos = null;
 	        try {
-	            fos = new FileOutputStream(INI_FILE);
+	            fos = new FileOutputStream(iniFile);
 	            props.store(fos, null);
 	        } catch (IOException e) {
 	            e.printStackTrace();
@@ -177,12 +177,12 @@ public final class AppMainFrame extends JFrame {
 	}
 
 	void restoreProperties() {
-	    if (INI_FILE.exists()) {
+	    if (iniFile.exists()) {
 	        // restore settings if ini file presents in file system
 	        Properties props = new Properties();
 	        FileInputStream fis = null;
 	        try {
-	            fis = new FileInputStream(INI_FILE);
+	            fis = new FileInputStream(iniFile);
 	            props.load(fis);
 	        } catch (IOException e) {
 	            e.printStackTrace();
@@ -196,7 +196,7 @@ public final class AppMainFrame extends JFrame {
 	        netController.restore(props);
 	        grossController.updateRatio();
 	        // delete ini file after data loading
-	        INI_FILE.delete();
+	        iniFile.delete();
 	    }
 	}
 
@@ -268,7 +268,7 @@ public final class AppMainFrame extends JFrame {
     private void setState(AppMainFrame frame, RecorderState state) {
     	Image logo = Functions.getLogo(state);
 		if (SystemTray.isSupported()) {
-			frame.trayIcon_.setImage(logo);
+			frame.trayIcon.setImage(logo);
 		}
 		frame.setIconImage(logo);
     }
