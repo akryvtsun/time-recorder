@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.akryvtsun.timerecorder.actions.AboutAction;
 import com.akryvtsun.timerecorder.controllers.GrossController;
 import com.akryvtsun.timerecorder.controllers.NetController;
 import com.akryvtsun.timerecorder.properties.Storage;
@@ -20,8 +21,8 @@ import com.akryvtsun.timerecorder.properties.Storage;
  * @author kontiky
  */
 public final class TimeRecorderFrame extends JFrame {
-    private static final String APP_NAME = "Time Recorder";
-    private static final String APP_VER = "1.41";
+    public static final String APP_NAME = "Time Recorder";
+    public static final String APP_VER = "1.41";
 
     private final GrossController grossController;
     private final NetController netController;
@@ -40,6 +41,7 @@ public final class TimeRecorderFrame extends JFrame {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 if (SystemTray.isSupported()) {
                     try {
@@ -97,6 +99,7 @@ public final class TimeRecorderFrame extends JFrame {
             trayIcon.setImageAutoSize(true);
 
             ActionListener actionListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setVisible(true);
                     setExtendedState(Frame.NORMAL);
@@ -116,7 +119,7 @@ public final class TimeRecorderFrame extends JFrame {
 
     private void exitApplication(final Component frame) {
         int result = JOptionPane.showConfirmDialog(frame,
-            "Do you wish to exit the " + APP_NAME + "?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
+            "Do you want to exit " + APP_NAME + "?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
             storage.storeProperties();
             if (SystemTray.isSupported()) {
@@ -129,6 +132,7 @@ public final class TimeRecorderFrame extends JFrame {
 
     private Action createNewDayAction() {
         Action action = new AbstractAction("New Workday", Functions.getIcon("new")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 netController.startNewDay();
                 grossController.startNewDay();
@@ -140,24 +144,12 @@ public final class TimeRecorderFrame extends JFrame {
 
     private Action createExitAction() {
         Action action = new AbstractAction("Exit") {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 exitApplication(TimeRecorderFrame.this);
             }
         };
         action.putValue(Action.MNEMONIC_KEY, Integer.valueOf('X'));
-        return action;
-    }
-
-    private Action createAboutAction(final Component frame) {
-        Action action = new AbstractAction("About...") {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame,
-                    new JLabel("<html><center>" + APP_NAME + " " + APP_VER +
-                        "<br>Copyright &copy; 2007-2020<br>by kontiky"),
-                    "About", JOptionPane.INFORMATION_MESSAGE);
-            }
-        };
-        action.putValue(Action.MNEMONIC_KEY, Integer.valueOf('A'));
         return action;
     }
 
@@ -180,7 +172,7 @@ public final class TimeRecorderFrame extends JFrame {
     private JMenu createHelpMenu() {
         JMenu menu = new JMenu("Help");
         menu.setMnemonic('h');
-        menu.add(new JMenuItem(createAboutAction(this)));
+        menu.add(new JMenuItem(new AboutAction(this)));
         return menu;
     }
 
