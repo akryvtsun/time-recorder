@@ -1,13 +1,12 @@
-package com.akryvtsun.timerecorder.actions;
+package com.akryvtsun.timerecorder.ui.actions;
 
-import com.akryvtsun.timerecorder.TimeRecorderFrame;
 import com.akryvtsun.timerecorder.properties.Storage;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-import static com.akryvtsun.timerecorder.TimeRecorderFrame.APP_NAME;
+import static com.akryvtsun.timerecorder.ui.controllers.TimeRecorderFrame.APP_NAME;
 
 public final class ExitAction extends AbstractAction {
     private final Window window;

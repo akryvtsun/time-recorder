@@ -1,8 +1,7 @@
-package com.akryvtsun.timerecorder.actions;
+package com.akryvtsun.timerecorder.ui.actions;
 
-import com.akryvtsun.timerecorder.Functions;
-import com.akryvtsun.timerecorder.controllers.StartStopAction;
-import com.akryvtsun.timerecorder.controllers.TimeController;
+import com.akryvtsun.timerecorder.ui.Functions;
+import com.akryvtsun.timerecorder.ui.controllers.TimeController;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -1,4 +1,4 @@
-package com.akryvtsun.timerecorder.controllers;
+package com.akryvtsun.timerecorder.ui.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +10,7 @@ import javax.swing.Icon;
 import javax.swing.Timer;
 import javax.swing.event.ChangeListener;
 
-import com.akryvtsun.timerecorder.Functions;
+import com.akryvtsun.timerecorder.ui.Functions;
 import com.akryvtsun.timerecorder.properties.Storable;
 
 /**

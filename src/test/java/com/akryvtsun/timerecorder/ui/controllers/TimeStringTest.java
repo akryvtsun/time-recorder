@@ -1,4 +1,4 @@
-package com.akryvtsun.timerecorder.controllers;
+package com.akryvtsun.timerecorder.ui.controllers;
 
 import org.junit.Test;
 

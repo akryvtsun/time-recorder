@@ -1,4 +1,4 @@
-package com.akryvtsun.timerecorder;
+package com.akryvtsun.timerecorder.ui;
 
 /**
  * @author kontiky

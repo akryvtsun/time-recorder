@@ -1,5 +1,7 @@
 package com.akryvtsun.timerecorder;
 
+import com.akryvtsun.timerecorder.ui.controllers.TimeRecorderFrame;
+
 import javax.swing.*;
 
 /**

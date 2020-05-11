@@ -1,4 +1,4 @@
-package com.akryvtsun.timerecorder.controllers;
+package com.akryvtsun.timerecorder.ui.controllers;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;

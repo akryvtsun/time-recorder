@@ -1,6 +1,6 @@
-package com.akryvtsun.timerecorder.actions;
+package com.akryvtsun.timerecorder.ui.actions;
 
-import com.akryvtsun.timerecorder.TimeRecorderFrame;
+import com.akryvtsun.timerecorder.ui.controllers.TimeRecorderFrame;
 
 import javax.swing.*;
 import java.awt.*;

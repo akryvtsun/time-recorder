@@ -1,4 +1,4 @@
-package com.akryvtsun.timerecorder.controllers;
+package com.akryvtsun.timerecorder.ui.controllers;
 
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;

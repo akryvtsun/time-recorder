@@ -1,4 +1,4 @@
-package com.akryvtsun.timerecorder;
+package com.akryvtsun.timerecorder.ui.controllers;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,11 +10,13 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import com.akryvtsun.timerecorder.actions.AboutAction;
-import com.akryvtsun.timerecorder.actions.ExitAction;
-import com.akryvtsun.timerecorder.actions.NewDayAction;
-import com.akryvtsun.timerecorder.controllers.GrossController;
-import com.akryvtsun.timerecorder.controllers.NetController;
+import com.akryvtsun.timerecorder.ui.Functions;
+import com.akryvtsun.timerecorder.ui.RecorderState;
+import com.akryvtsun.timerecorder.ui.actions.AboutAction;
+import com.akryvtsun.timerecorder.ui.actions.ExitAction;
+import com.akryvtsun.timerecorder.ui.actions.NewDayAction;
+import com.akryvtsun.timerecorder.ui.controllers.GrossController;
+import com.akryvtsun.timerecorder.ui.controllers.NetController;
 import com.akryvtsun.timerecorder.properties.Storage;
 
 /**
@@ -33,7 +35,7 @@ public final class TimeRecorderFrame extends JFrame {
 
     private TrayIcon trayIcon;
 
-    TimeRecorderFrame() {
+    public TimeRecorderFrame() {
         super(APP_NAME);
 
         Image logo = Functions.getLogo(RecorderState.INIT);

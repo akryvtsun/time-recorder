@@ -1,7 +1,6 @@
-package com.akryvtsun.timerecorder.controllers;
+package com.akryvtsun.timerecorder.ui.controllers;
 
 import java.awt.Component;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
