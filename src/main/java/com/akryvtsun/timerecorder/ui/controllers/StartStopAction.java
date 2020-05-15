@@ -33,29 +33,32 @@ public abstract class StartStopAction extends AbstractAction implements Storable
     private static final String PAUSE_TEXT = "Pause";
     private static final Icon PAUSE_ICON = Functions.getIcon("pause");
 
-    private long periodMillis, lastStartMillis;
-
     static {
         Clock.start();
     }
 
+    private final String name;
     private final ActionListener clockListener;
 
+    private long periodMillis, lastStartMillis;
     private boolean isStarted = false;
 
-    public StartStopAction() {
-        setEnabled(false);
+    public StartStopAction(String name) {
+        this.name = name;
         clockListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 updatePeriodImpl();
             }
         };
+        setEnabled(false);
         prepareToStart();
     }
 
     protected abstract void updatePeriod(long periodMillis);
 
-    protected abstract String getName();
+    protected String getName() {
+        return name;
+    };
 
     public final boolean isStarted() {
         return isStarted;

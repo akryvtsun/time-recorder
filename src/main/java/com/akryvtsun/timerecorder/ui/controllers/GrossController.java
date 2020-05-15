@@ -113,6 +113,9 @@ public class GrossController extends TimeController implements Storable {
     }
 
     private class GrossTimerAction extends StartStopAction {
+        public GrossTimerAction() {
+            super("gross");
+        }
 
         protected void doAction() {
             super.doAction();
@@ -122,11 +125,6 @@ public class GrossController extends TimeController implements Storable {
         @Override
         protected void updatePeriod(long periodMillis) {
             updateCounters(periodMillis);
-        }
-
-        @Override
-        protected String getName() {
-            return "gross";
         }
     }
 }

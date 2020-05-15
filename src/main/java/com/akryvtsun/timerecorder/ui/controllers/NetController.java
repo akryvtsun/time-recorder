@@ -119,6 +119,9 @@ public class NetController extends TimeController implements Storable {
     }
 
     private class NetTimerAction extends StartStopAction {
+        public NetTimerAction() {
+            super("net");
+        }
 
         @Override
         public void setEnabled(boolean value) {
@@ -130,11 +133,6 @@ public class NetController extends TimeController implements Storable {
         @Override
         protected void updatePeriod(long periodMillis) {
             setNetTime(periodMillis);
-        }
-
-        @Override
-        protected String getName() {
-            return "net";
         }
     }
 }
