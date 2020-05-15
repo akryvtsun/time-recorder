@@ -42,7 +42,6 @@ public abstract class StartStopAction extends AbstractAction implements Storable
     private final ActionListener clockListener;
 
     private boolean isStarted = false;
-    private ChangeListener listener;
 
     public StartStopAction() {
         setEnabled(false);
@@ -57,10 +56,6 @@ public abstract class StartStopAction extends AbstractAction implements Storable
     protected abstract void updatePeriod(long periodMillis);
 
     protected abstract String getName();
-
-    public void setChangeListener(ChangeListener listener) {
-        this.listener = listener;
-    }
 
     public final boolean isStarted() {
         return isStarted;
@@ -104,8 +99,6 @@ public abstract class StartStopAction extends AbstractAction implements Storable
             doAction();
             Clock.addActionListener(clockListener);
         }
-        if (listener != null)
-            listener.stateChanged(null);
     }
 
     protected void doAction() {

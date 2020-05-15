@@ -58,9 +58,9 @@ public final class TimeRecorderFrame extends JFrame {
             }
         });
 
-        final ChangeListener l = new ChangeListener() {
+        final ActionListener l = new ActionListener() {
             @Override
-            public void stateChanged(ChangeEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 RecorderState state = RecorderState.INIT;
                 if (grossController.getTimeAction().isStarted()) {
                     state = netController.getTimeAction().isStarted()
@@ -72,9 +72,9 @@ public final class TimeRecorderFrame extends JFrame {
         };
 
         netController = new NetController();
-        netController.getTimeAction().setChangeListener(l);
+        netController.getTimeButton().addActionListener(l);
         grossController = new GrossController(netController);
-        grossController.getTimeAction().setChangeListener(l);
+        grossController.getTimeButton().addActionListener(l);
 
         storage = new Storage(netController, grossController);
 
