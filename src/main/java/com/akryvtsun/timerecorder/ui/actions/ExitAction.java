@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-import static com.akryvtsun.timerecorder.ui.controllers.TimeRecorderFrame.APP_NAME;
+import static com.akryvtsun.timerecorder.ui.TimeRecorderFrame.APP_NAME;
 
 public final class ExitAction extends AbstractAction {
     private final Window window;

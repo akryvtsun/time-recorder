@@ -1,8 +1,8 @@
 package com.akryvtsun.timerecorder;
 
-import com.akryvtsun.timerecorder.ui.controllers.TimeRecorderFrame;
+import com.akryvtsun.timerecorder.ui.TimeRecorderFrame;
 
-import javax.swing.*;
+import java.awt.*;
 
 /**
  * TODO add net start/stop actions to tray menu
@@ -34,7 +34,7 @@ import javax.swing.*;
 public final class Launcher {
 
     public static void main(String... args) {
-        JFrame frame = new TimeRecorderFrame();
+        Window frame = new TimeRecorderFrame();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }

@@ -1,4 +1,4 @@
-package com.akryvtsun.timerecorder.ui.controllers;
+package com.akryvtsun.timerecorder.ui;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

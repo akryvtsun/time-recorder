@@ -1,10 +1,7 @@
 package com.akryvtsun.timerecorder.ui;
 
-import com.akryvtsun.timerecorder.ui.controllers.TimeRecorderFrame;
-
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Common application functions.
