@@ -117,7 +117,7 @@ public abstract class StartStopAction extends AbstractAction implements Storable
         return periodMillis + (System.currentTimeMillis() - lastStartMillis);
     }
 
-    protected void updatePeriodImpl() {
+    private void updatePeriodImpl() {
         updatePeriod(getPeriod());
     }
 
