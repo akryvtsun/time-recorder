@@ -19,7 +19,7 @@ import com.akryvtsun.timerecorder.properties.Storable;
  *
  * @author kontiky
  */
-public abstract class StartStopAction extends AbstractAction implements Storable {
+public /*final*/ class StartStopAction extends AbstractAction implements Storable {
     static final int TIMER_TICK = 1000;
     private static final Timer Clock = new Timer(TIMER_TICK, null);
 
@@ -38,23 +38,20 @@ public abstract class StartStopAction extends AbstractAction implements Storable
     }
 
     private final String name;
-    private final ActionListener clockListener;
 
+    private ActionListener clockListener;
     private long periodMillis, lastStartMillis;
     private boolean isStarted = false;
 
     public StartStopAction(String name) {
         this.name = name;
-        clockListener = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                updatePeriodImpl();
-            }
-        };
         setEnabled(false);
         prepareToStart();
     }
 
-    protected abstract void updatePeriod(long periodMillis);
+    public void setActionListener(ActionListener clockListener) {
+        this.clockListener = clockListener;
+    }
 
     protected String getName() {
         return name;
@@ -84,7 +81,7 @@ public abstract class StartStopAction extends AbstractAction implements Storable
             lastStartMillis = Long.parseLong(props.getProperty(ENTITY_PREFIX + getName() + LAST_START_PROPERTY, "0"));
         else
             lastStartMillis = System.currentTimeMillis();
-        updatePeriodImpl();
+        clockListener.actionPerformed(null);
     }
 
     @Override
@@ -113,12 +110,8 @@ public abstract class StartStopAction extends AbstractAction implements Storable
         }
     }
 
-    protected long getPeriod() {
+    public long getPeriod() {
         return periodMillis + (System.currentTimeMillis() - lastStartMillis);
-    }
-
-    private void updatePeriodImpl() {
-        updatePeriod(getPeriod());
     }
 
     private void prepareToStart() {

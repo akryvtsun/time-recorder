@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
@@ -19,7 +21,7 @@ import com.akryvtsun.timerecorder.properties.Storable;
  *
  * @author kontiky
  */
-public class NetController extends TimeController implements Storable {
+public final class NetController extends TimeController implements Storable {
     private static final String RATIO_FORMAT = "%.3f";
 
     private static final String PROPERTY_PREFIX = ENTITY_PREFIX + ".net";
@@ -56,7 +58,21 @@ public class NetController extends TimeController implements Storable {
 
     @Override
     protected StartStopAction createTimeAction() {
-        return new NetTimerAction();
+        StartStopAction action = new StartStopAction("net") {
+            @Override
+            public void setEnabled(boolean value) {
+                super.setEnabled(value);
+                if (!value && isStarted())
+                    actionPerformed(null);
+            }
+        };
+        action.setActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setNetTime(action.getPeriod());
+            }
+        });
+        return action;
     }
 
     @Override
@@ -116,23 +132,5 @@ public class NetController extends TimeController implements Storable {
 
     public String getRatio() {
         return ratio.getText();
-    }
-
-    private class NetTimerAction extends StartStopAction {
-        public NetTimerAction() {
-            super("net");
-        }
-
-        @Override
-        public void setEnabled(boolean value) {
-            super.setEnabled(value);
-            if (!value && isStarted())
-                actionPerformed(null);
-        }
-
-        @Override
-        protected void updatePeriod(long periodMillis) {
-            setNetTime(periodMillis);
-        }
     }
 }

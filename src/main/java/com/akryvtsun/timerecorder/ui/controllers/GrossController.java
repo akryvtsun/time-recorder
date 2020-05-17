@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
@@ -18,7 +20,7 @@ import com.akryvtsun.timerecorder.properties.Storable;
  *
  * @author kontiky
  */
-public class GrossController extends TimeController implements Storable {
+public final class GrossController extends TimeController implements Storable {
     private static final String TIME_FORMAT = "%tT";
 
     private static final String PROPERTY_PREFIX = ENTITY_PREFIX + ".gross";
@@ -60,7 +62,20 @@ public class GrossController extends TimeController implements Storable {
 
     @Override
     protected StartStopAction createTimeAction() {
-        return new GrossTimerAction();
+        StartStopAction action = new StartStopAction("gross") {
+            @Override
+            protected void doAction() {
+                super.doAction();
+                netController.setEnabled(isStarted());
+            }
+        };
+        action.setActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateCounters(action.getPeriod());
+            }
+        });
+        return action;
     }
 
     @Override
@@ -110,21 +125,5 @@ public class GrossController extends TimeController implements Storable {
 
     public void updateRatio() {
         updateCounters(getTimeAction().getPeriod());
-    }
-
-    private class GrossTimerAction extends StartStopAction {
-        public GrossTimerAction() {
-            super("gross");
-        }
-
-        protected void doAction() {
-            super.doAction();
-            netController.setEnabled(isStarted());
-        }
-
-        @Override
-        protected void updatePeriod(long periodMillis) {
-            updateCounters(periodMillis);
-        }
     }
 }
