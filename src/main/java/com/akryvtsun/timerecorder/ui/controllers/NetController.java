@@ -121,7 +121,7 @@ public final class NetController extends TimeController implements Storable {
 
     private void setNetTime(long millis) {
         netTimeMillis = millis;
-        netTime.setText(new TimeString(netTimeMillis).get());
+        netTime.setText(new TimeInMillis(netTimeMillis).toString());
     }
 
     private void updateRatioImpl(double value) {
