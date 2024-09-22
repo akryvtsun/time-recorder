@@ -1,5 +1,5 @@
 # Time Recorder
-![CI](https://github.com/akryvtsun/time-recorder/workflows/CI/badge.svg)
+[![Actions Status](https://github.com/akryvtsun/time-recorder/workflows/CI/badge.svg)](https://github.com/akryvtsun/time-recorder/actions)
 [![Hits-of-Code](https://hitsofcode.com/github/akryvtsun/time-recorder)](https://hitsofcode.com/view/github/akryvtsun/time-recorder)
 
 <img src="misc/time-recorder.png">
