@@ -1,20 +1,13 @@
 package com.akryvtsun.timerecorder.ui.controllers;
 
-import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import com.akryvtsun.timerecorder.properties.Storable;
+
+import javax.swing.*;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.util.Properties;
 
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.event.ChangeListener;
-
-import com.akryvtsun.timerecorder.properties.Storable;
+import static com.akryvtsun.timerecorder.ui.Functions.TIMER_TICK;
 
 /**
  * Net time calculation controller.
@@ -35,8 +28,13 @@ public final class NetController extends TimeController implements Storable {
     private long netTimeMillis;
     private ChangeListener listener;
 
-    @Override
-    protected Component createViewComponent() {
+    public NetController(StartStopAction action) {
+        super(action);
+        action.setActionListener(e -> setNetTime(action.getPeriod()));
+        setViewComponent(createViewComponent());
+    }
+
+    private Component createViewComponent() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createTitledBorder("Net control"));
 
@@ -54,25 +52,6 @@ public final class NetController extends TimeController implements Storable {
             GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(7, 5, 5, 5), 0, 0));
 
         return panel;
-    }
-
-    @Override
-    protected StartStopAction createTimeAction() {
-        StartStopAction action = new StartStopAction("net") {
-            @Override
-            public void setEnabled(boolean value) {
-                super.setEnabled(value);
-                if (!value && isStarted())
-                    actionPerformed(null);
-            }
-        };
-        action.setActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setNetTime(action.getPeriod());
-            }
-        });
-        return action;
     }
 
     @Override
@@ -94,7 +73,10 @@ public final class NetController extends TimeController implements Storable {
     }
 
     public void setEnabled(boolean value) {
+        boolean stopNeeded = !value && getTimeAction().isStarted();
         getTimeAction().setEnabled(value);
+        if (stopNeeded)
+            getTimeAction().actionPerformed(null);
     }
 
     @Override
@@ -113,7 +95,7 @@ public final class NetController extends TimeController implements Storable {
     }
 
     public void updateRatio(long grossTimeMillis) {
-        if (netTimeMillis >= StartStopAction.TIMER_TICK)
+        if (netTimeMillis >= TIMER_TICK)
             updateRatioImpl((double) netTimeMillis / grossTimeMillis);
         else
             updateRatioImpl(0);

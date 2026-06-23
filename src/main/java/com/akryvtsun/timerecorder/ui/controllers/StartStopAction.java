@@ -1,17 +1,11 @@
 package com.akryvtsun.timerecorder.ui.controllers;
 
+import com.akryvtsun.timerecorder.properties.Storable;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Properties;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Icon;
-import javax.swing.Timer;
-import javax.swing.event.ChangeListener;
-
-import com.akryvtsun.timerecorder.ui.Functions;
-import com.akryvtsun.timerecorder.properties.Storable;
 
 /**
  * Start/stop action for time controllers.
@@ -19,38 +13,39 @@ import com.akryvtsun.timerecorder.properties.Storable;
  *
  * @author kontiky
  */
-public /*final*/ class StartStopAction extends AbstractAction implements Storable {
-    static final int TIMER_TICK = 1000;
-    private static final Timer Clock = new Timer(TIMER_TICK, null);
-
+public final class StartStopAction extends AbstractAction implements Storable {
     private static final String ENTITY_PREFIX = "time.";
     private static final String PERIOD_PROPERTY = ".periodMillis";
     private static final String LAST_START_PROPERTY = ".lastStartMillis";
 
     private static final String START_TEXT = "Start";
-    private static final Icon START_ICON = Functions.getIcon("start");
-
     private static final String PAUSE_TEXT = "Pause";
-    private static final Icon PAUSE_ICON = Functions.getIcon("pause");
-
-    static {
-        Clock.start();
-    }
 
     private final String name;
+    private final Timer clock;
+    private final Icon startIcon;
+    private final Icon pauseIcon;
 
     private ActionListener clockListener;
+    private Runnable onToggle;
     private long periodMillis, lastStartMillis;
     private boolean isStarted = false;
 
-    public StartStopAction(String name) {
+    public StartStopAction(String name, Timer clock, Icon startIcon, Icon pauseIcon) {
         this.name = name;
+        this.clock = clock;
+        this.startIcon = startIcon;
+        this.pauseIcon = pauseIcon;
         setEnabled(false);
         prepareToStart();
     }
 
     public void setActionListener(ActionListener clockListener) {
         this.clockListener = clockListener;
+    }
+
+    public void setOnToggle(Runnable onToggle) {
+        this.onToggle = onToggle;
     }
 
     protected String getName() {
@@ -88,7 +83,7 @@ public /*final*/ class StartStopAction extends AbstractAction implements Storabl
     public void actionPerformed(ActionEvent e) {
         if (isStarted()) {
             // stop action
-            Clock.removeActionListener(clockListener);
+            clock.removeActionListener(clockListener);
             isStarted = false;
             doAction();
             prepareToStart();
@@ -97,11 +92,13 @@ public /*final*/ class StartStopAction extends AbstractAction implements Storabl
             isStarted = true;
             prepareToStop();
             doAction();
-            Clock.addActionListener(clockListener);
+            clock.addActionListener(clockListener);
         }
+        if (onToggle != null)
+            onToggle.run();
     }
 
-    protected void doAction() {
+    private void doAction() {
         long currentTimeMillis = System.currentTimeMillis();
         if (isStarted()) {
             lastStartMillis = currentTimeMillis;
@@ -115,12 +112,12 @@ public /*final*/ class StartStopAction extends AbstractAction implements Storabl
     }
 
     private void prepareToStart() {
-        putValue(Action.SMALL_ICON, START_ICON);
+        putValue(Action.SMALL_ICON, startIcon);
         putValue(Action.NAME, START_TEXT);
     }
 
     private void prepareToStop() {
-        putValue(Action.SMALL_ICON, PAUSE_ICON);
+        putValue(Action.SMALL_ICON, pauseIcon);
         putValue(Action.NAME, PAUSE_TEXT);
     }
 }

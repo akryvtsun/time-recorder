@@ -1,19 +1,10 @@
 package com.akryvtsun.timerecorder.ui.controllers;
 
-import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Properties;
-
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import com.akryvtsun.timerecorder.properties.Storable;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Properties;
 
 /**
  * Gross time calculation controller.
@@ -35,12 +26,15 @@ public final class GrossController extends TimeController implements Storable {
 
     private long startTimeMillis;
 
-    public GrossController(NetController netController) {
+    public GrossController(StartStopAction action, NetController netController) {
+        super(action);
         this.netController = netController;
+        action.setActionListener(e -> updateCounters(action.getPeriod()));
+        action.setOnToggle(() -> netController.setEnabled(action.isStarted()));
+        setViewComponent(createViewComponent());
     }
 
-    @Override
-    protected Component createViewComponent() {
+    private Component createViewComponent() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createTitledBorder("Gross control"));
 
@@ -58,24 +52,6 @@ public final class GrossController extends TimeController implements Storable {
             GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(7, 5, 5, 5), 0, 0));
 
         return panel;
-    }
-
-    @Override
-    protected StartStopAction createTimeAction() {
-        StartStopAction action = new StartStopAction("gross") {
-            @Override
-            protected void doAction() {
-                super.doAction();
-                netController.setEnabled(isStarted());
-            }
-        };
-        action.setActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateCounters(action.getPeriod());
-            }
-        });
-        return action;
     }
 
     @Override

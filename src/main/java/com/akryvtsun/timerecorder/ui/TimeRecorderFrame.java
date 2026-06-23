@@ -1,23 +1,20 @@
 package com.akryvtsun.timerecorder.ui;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import com.akryvtsun.timerecorder.ui.Functions;
-import com.akryvtsun.timerecorder.ui.RecorderState;
+import com.akryvtsun.timerecorder.properties.Storage;
 import com.akryvtsun.timerecorder.ui.actions.AboutAction;
 import com.akryvtsun.timerecorder.ui.actions.ExitAction;
 import com.akryvtsun.timerecorder.ui.actions.NewDayAction;
 import com.akryvtsun.timerecorder.ui.controllers.GrossController;
 import com.akryvtsun.timerecorder.ui.controllers.NetController;
-import com.akryvtsun.timerecorder.properties.Storage;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Time Recorder main frame.
@@ -35,8 +32,12 @@ public final class TimeRecorderFrame extends JFrame {
 
     private TrayIcon trayIcon;
 
-    public TimeRecorderFrame() {
+    public TimeRecorderFrame(GrossController grossController, NetController netController, Storage storage) {
         super(APP_NAME);
+
+        this.grossController = grossController;
+        this.netController = netController;
+        this.storage = storage;
 
         Image logo = Functions.getLogo(RecorderState.INIT);
 
@@ -71,12 +72,8 @@ public final class TimeRecorderFrame extends JFrame {
             }
         };
 
-        netController = new NetController();
         netController.getTimeButton().addActionListener(l);
-        grossController = new GrossController(netController);
         grossController.getTimeButton().addActionListener(l);
-
-        storage = new Storage(netController, grossController);
 
         netController.setRatioListener(new ChangeListener() {
             @Override
@@ -106,9 +103,6 @@ public final class TimeRecorderFrame extends JFrame {
         setJMenuBar(createMenuBar());
         add(createContent());
         pack();
-
-        storage.restoreProperties();
-        grossController.updateRatio();
     }
 
     private JMenuBar createMenuBar() {

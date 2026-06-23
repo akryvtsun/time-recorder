@@ -1,9 +1,7 @@
 package com.akryvtsun.timerecorder.ui.controllers;
 
-import java.awt.Component;
-
-import javax.swing.JButton;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Abstract time controller implementation.
@@ -13,26 +11,29 @@ import javax.swing.JTextField;
 public abstract class TimeController {
     protected static final String ENTITY_PREFIX = "controller";
 
-    private StartStopAction timeAction;
+    private final StartStopAction timeAction;
+    private final JButton timeButton;
     private Component viewComponent;
-    private JButton timeButton;
+
+    protected TimeController(StartStopAction timeAction) {
+        this.timeAction = timeAction;
+        this.timeButton = new JButton(timeAction);
+    }
 
     public Component getViewComponent() {
-        if (viewComponent == null)
-            viewComponent = createViewComponent();
         return viewComponent;
     }
 
     public JButton getTimeButton() {
-        if (timeButton == null)
-            timeButton = new JButton(getTimeAction());
         return timeButton;
     }
 
     public StartStopAction getTimeAction() {
-        if (timeAction == null)
-            timeAction = createTimeAction();
         return timeAction;
+    }
+
+    protected void setViewComponent(Component viewComponent) {
+        this.viewComponent = viewComponent;
     }
 
     protected static JTextField createTimeField() {
@@ -41,10 +42,6 @@ public abstract class TimeController {
         field.setEditable(false);
         return field;
     }
-
-    protected abstract StartStopAction createTimeAction();
-
-    protected abstract Component createViewComponent();
 
     public abstract void startNewDay();
 }

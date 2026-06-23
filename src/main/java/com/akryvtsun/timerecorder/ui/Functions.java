@@ -10,8 +10,10 @@ import java.awt.*;
  */
 public final class Functions {
 
+    public static final int TIMER_TICK = 1000;
+
     /**
-     * Loads image from file in defined location into memory.
+     * Loads image from a file in a defined location into memory.
      * Loads only <i>png</i> image files.
      *
      * @param iconName image file name.
