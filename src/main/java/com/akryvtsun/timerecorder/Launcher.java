@@ -1,7 +1,13 @@
 package com.akryvtsun.timerecorder;
 
+import com.akryvtsun.timerecorder.properties.Storage;
+import com.akryvtsun.timerecorder.ui.Functions;
 import com.akryvtsun.timerecorder.ui.TimeRecorderFrame;
+import com.akryvtsun.timerecorder.ui.controllers.GrossController;
+import com.akryvtsun.timerecorder.ui.controllers.NetController;
+import com.akryvtsun.timerecorder.ui.controllers.StartStopAction;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -34,7 +40,24 @@ import java.awt.*;
 public final class Launcher {
 
     public static void main(String... args) {
-        Window frame = new TimeRecorderFrame();
+        // Composition root: assemble the object graph in dependency order.
+        Timer clock = new Timer(StartStopAction.TIMER_TICK, null);
+        Icon start = Functions.getIcon("start");
+        Icon pause = Functions.getIcon("pause");
+
+        StartStopAction netAction = new StartStopAction("net", clock, start, pause);
+        NetController net = new NetController(netAction);
+
+        StartStopAction grossAction = new StartStopAction("gross", clock, start, pause);
+        GrossController gross = new GrossController(grossAction, net);
+
+        Storage storage = new Storage(net, gross);
+        Window frame = new TimeRecorderFrame(gross, net, storage);
+
+        clock.start();
+        storage.restoreProperties();
+        gross.updateRatio();
+
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
