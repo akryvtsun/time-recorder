@@ -7,6 +7,8 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.util.Properties;
 
+import static com.akryvtsun.timerecorder.ui.Functions.TIMER_TICK;
+
 /**
  * Net time calculation controller.
  *
@@ -93,7 +95,7 @@ public final class NetController extends TimeController implements Storable {
     }
 
     public void updateRatio(long grossTimeMillis) {
-        if (netTimeMillis >= StartStopAction.TIMER_TICK)
+        if (netTimeMillis >= TIMER_TICK)
             updateRatioImpl((double) netTimeMillis / grossTimeMillis);
         else
             updateRatioImpl(0);

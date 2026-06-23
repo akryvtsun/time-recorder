@@ -14,8 +14,6 @@ import java.util.Properties;
  * @author kontiky
  */
 public final class StartStopAction extends AbstractAction implements Storable {
-    public static final int TIMER_TICK = 1000;
-
     private static final String ENTITY_PREFIX = "time.";
     private static final String PERIOD_PROPERTY = ".periodMillis";
     private static final String LAST_START_PROPERTY = ".lastStartMillis";

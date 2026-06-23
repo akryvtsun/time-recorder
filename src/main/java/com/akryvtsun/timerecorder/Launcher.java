@@ -10,6 +10,8 @@ import com.akryvtsun.timerecorder.ui.controllers.StartStopAction;
 import javax.swing.*;
 import java.awt.*;
 
+import static com.akryvtsun.timerecorder.ui.Functions.TIMER_TICK;
+
 /**
  * TODO add net start/stop actions to tray menu
  * http://java.sun.com/developer/technicalArticles/J2SE/Desktop/javase6/systemtray
@@ -40,8 +42,7 @@ import java.awt.*;
 public final class Launcher {
 
     public static void main(String... args) {
-        // Composition root: assemble the object graph in dependency order.
-        Timer clock = new Timer(StartStopAction.TIMER_TICK, null);
+        Timer clock = new Timer(TIMER_TICK, null);
         Icon start = Functions.getIcon("start");
         Icon pause = Functions.getIcon("pause");
 
